@@ -1,7 +1,0 @@
-openai==0.28.0
-faiss-cpu
-numpy
-pandas
-flask
-python-dotenv
-pydantic
