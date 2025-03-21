@@ -27,7 +27,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 # The embedding model to use
 EMBEDDING_MODEL = "text-embedding-3-large"
 
-# Path to your CSV file
+# Path to our CSV file
 CSV_PATH = "BOS_and_HK_Standard_Catalog - Sheet1.csv"
 
 # Where the FAISS index will be stored
