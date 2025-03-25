@@ -519,7 +519,7 @@ def rfq_search():
             # Identify the best match (top of the sorted list)
             best_match = top_matches_temp[0] if top_matches_temp else None
 
-            # If best_match confidence is below 0.50, replace all fields with "-"
+            # **Updated logic here**: If best_match confidence is below 0.50, replace all fields accordingly
             if best_match and best_match["confidence_score"] < 0.50:
                 best_match = {
                     "rank": 0,
@@ -551,3 +551,4 @@ def rfq_search():
 if __name__ == '__main__':
     # Runs the Flask app on localhost:5000 in debug mode
     app.run(host='0.0.0.0', port=5000, debug=True)
+
