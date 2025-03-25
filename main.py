@@ -446,14 +446,14 @@ def rfq_search():
                     "original_string": original_strings[idx],
                     "enhanced_string": elaborated_list[idx],
                     "best_match": {
-                        "rank": "-",
-                        "product_id": "-",
-                        "brand": "-",
-                        "product_name": "-",
-                        "quantity": "-",
-                        "slab_sp_excl_tax": "-",
-                        "sale_qty": "-",
-                        "confidence_score": "-"
+                        "rank": 0,
+                        "product_id": "",
+                        "brand": "",
+                        "product_name": "",
+                        "quantity": 0,
+                        "slab_sp_excl_tax": "",
+                        "sale_qty": 0,
+                        "confidence_score": 0
                     },
                     "top_5_matches": []
                 })
@@ -522,14 +522,14 @@ def rfq_search():
             # If best_match confidence is below 0.50, replace all fields with "-"
             if best_match and best_match["confidence_score"] < 0.50:
                 best_match = {
-                    "rank": "-",
-                    "product_id": "-",
-                    "brand": "-",
-                    "product_name": "-",
-                    "quantity": "-",
-                    "slab_sp_excl_tax": "-",
-                    "sale_qty": "-",
-                    "confidence_score": "-"
+                    "rank": 0,
+                    "product_id": "",
+                    "brand": "",
+                    "product_name": "",
+                    "quantity": 0,
+                    "slab_sp_excl_tax": "",
+                    "sale_qty": 0,
+                    "confidence_score": 0
                 }
 
             # Collect final data for this item
