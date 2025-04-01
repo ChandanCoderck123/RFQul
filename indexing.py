@@ -64,15 +64,20 @@ def get_embedding(text: str) -> np.ndarray:
 def build_faiss_index():
     """
     1. Load the CSV file into a DataFrame.
-    2. Create a normalized description (Brand + Description).
+    2. Create a normalized description (Brand + Description + String1 + String2).
     3. Generate embeddings for each row.
     4. Build the FAISS index.
     5. Save the index to disk.
     6. Create & save a catalog map from index->row data.
     """
-    df = pd.read_csv(CSV_PATH).fillna("")
+    df = pd.read_csv(CSV_PATH).fillna("")  
+
+    # Use correct column names (case & spacing matters)
     df["Normalized_Description"] = (
-        df["Brand"] + " " + df["Description"]
+        df["Brand"].astype(str) + " " +
+        df["Description"].astype(str) + " " +
+        df["String1"].astype(str) + " " +
+        df["String2"].astype(str)
     ).apply(normalize_text)
 
     product_texts = df["Normalized_Description"].tolist()
