@@ -551,4 +551,3 @@ def rfq_search():
 if __name__ == '__main__':
     # Runs the Flask app on localhost:5000 in debug mode
     app.run(host='0.0.0.0', port=5000, debug=True)
-
