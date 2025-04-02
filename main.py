@@ -9,8 +9,8 @@ main.py
   4) Optionally elaborate product descriptions (GPT) using chunking (one call per chunk of items).
   5) Convert the elaborated text to embeddings (OpenAI) in a single batch call for each chunk.
   6) Query the FAISS index for top 5 matches per item.
-  7) Re-rank if confidence scores differ by 1% or less, favoring higher sale quantity.
-  8) If top match’s confidence score < 0.50, replace all best_match fields with “-”.
+  7) Re-rank if confidence scores differ by 2% or less, favoring higher sale quantity.
+  8) If top match’s confidence score < 0.50, replace all best_match fields with “space”.
   9) Return a JSON response following the defined RESPONSE_SCHEMA.
 
 Usage:
@@ -493,7 +493,7 @@ def rfq_search():
             # Sort the matches by confidence (descending)
             top_matches_temp.sort(key=lambda x: x["confidence_score"], reverse=True)
 
-            # Re-rank if confidence difference <= 1% among consecutive items, favor higher sale_qty
+            # Re-rank if confidence difference <= 2% among consecutive items, favor higher sale_qty
             i = 0
             while i < len(top_matches_temp) - 1:
                 curr = top_matches_temp[i]
@@ -502,7 +502,7 @@ def rfq_search():
                 c2 = nxt["confidence_score"]
 
                 # Only if c1 > 0 to avoid division by zero
-                if c1 > 0 and abs(c1 - c2) / c1 <= 0.01:
+                if c1 > 0 and abs(c1 - c2) / c1 <= 0.02:
                     # If next item has a higher sale_qty, swap them
                     if nxt["sale_qty"] > curr["sale_qty"]:
                         top_matches_temp[i], top_matches_temp[i+1] = nxt, curr
@@ -519,7 +519,7 @@ def rfq_search():
             # Identify the best match (top of the sorted list)
             best_match = top_matches_temp[0] if top_matches_temp else None
 
-            # **Updated logic here**: If best_match confidence is below 0.50, replace all fields accordingly
+            # If best_match confidence is below 0.50, replace all fields accordingly
             if best_match and best_match["confidence_score"] < 0.50:
                 best_match = {
                     "rank": 0,
