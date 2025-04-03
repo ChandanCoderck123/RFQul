@@ -502,7 +502,7 @@ def rfq_search():
                 c2 = nxt["confidence_score"]
 
                 # Only if c1 > 0 to avoid division by zero
-                if c1 > 0 and abs(c1 - c2) / c1 <= 0.01:
+                if c1 > 0 and abs(c1 - c2) / c1 <= 0.02:
                     # If next item has a higher sale_qty, swap them
                     if nxt["sale_qty"] > curr["sale_qty"]:
                         top_matches_temp[i], top_matches_temp[i+1] = nxt, curr
