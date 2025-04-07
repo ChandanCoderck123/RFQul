@@ -217,6 +217,8 @@ Incorporate Synonyms for Ambiguous Descriptions:
 Where customer descriptions use synonyms or less common terms (e.g., “broom stick with metal handle”), include the generally accepted synonym or standardized term (e.g., “broom”) in the output.
 Use commonly used synonyms to resolve ambiguities and improve matching with the catalog.
 
+**Always prioritize attributes that differentiate variants: size, count, type, color, GSM, model numbers. Highlight these explicitly in the output.**
+
 Items:
 {lines}
 
@@ -408,7 +410,7 @@ def rfq_search():
         return jsonify(response_data), 200
 
     # Step 2) chunk the extracted products in groups of 15 for elaboration & embedding
-    CHUNK_SIZE = 15
+    CHUNK_SIZE = 10
     chunked_products = [
         extracted_products[i:i+CHUNK_SIZE]
         for i in range(0, len(extracted_products), CHUNK_SIZE)
@@ -493,7 +495,7 @@ def rfq_search():
             # Sort the matches by confidence (descending)
             top_matches_temp.sort(key=lambda x: x["confidence_score"], reverse=True)
 
-            # Re-rank if confidence difference <= 1% among consecutive items, favor higher sale_qty
+            # Re-rank if confidence difference <= 2% among consecutive items, favor higher sale_qty
             i = 0
             while i < len(top_matches_temp) - 1:
                 curr = top_matches_temp[i]
