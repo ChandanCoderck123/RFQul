@@ -9,7 +9,7 @@ main.py
   4) Optionally elaborate product descriptions (GPT) using chunking (one call per chunk of items).
   5) Convert the elaborated text to embeddings (OpenAI) in a single batch call for each chunk.
   6) Query the FAISS index for top 5 matches per item.
-  7) Re-rank if confidence scores differ by 1% or less, favoring higher sale quantity.
+  7) Re-rank if confidence scores differ by 2% or less, favoring higher sale quantity.
   8) If top match’s confidence score < 0.50, replace all best_match fields with “-”.
   9) Return a JSON response following the defined RESPONSE_SCHEMA.
 
@@ -167,7 +167,7 @@ def get_embeddings_batch(strings: list[str]) -> list[np.ndarray]:
 
 def elaborate_rfq_descriptions_batch(original_strings):
     """
-    Creates a single GPT call to elaborate up to 15 items at once.
+    Creates a single GPT call to elaborate up to 10 items at once.
     Returns a list of the same length, each item is an "enhanced" string.
     If GPT fails or returns invalid format, we fallback to the original strings.
     """
@@ -409,7 +409,7 @@ def rfq_search():
         }
         return jsonify(response_data), 200
 
-    # Step 2) chunk the extracted products in groups of 15 for elaboration & embedding
+    # Step 2) chunk the extracted products in groups of 10 for elaboration & embedding
     CHUNK_SIZE = 10
     chunked_products = [
         extracted_products[i:i+CHUNK_SIZE]
