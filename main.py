@@ -109,7 +109,7 @@ openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Define our model references
 EMBEDDING_MODEL = "text-embedding-3-large"
-GPT_MODEL = "gpt-4o-mini"
+GPT_MODEL = "gpt-4.1-mini"
 
 # Paths to FAISS index and catalog map
 INDEX_PATH = "catalog.index"
